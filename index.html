@@ -1,6 +1,6 @@
 <p>Let's play Rock, Paper, Scissors!</p>
 
-<style>
+<script>
 
 const comp = Math.floor(Math.random() * 3) + 1;
 
@@ -18,11 +18,16 @@ const computerSelection = getComputerChoice();
 let playerSelection = prompt('input either rock, paper or scissors');
 playerSelection = playerSelection.substr(0, 1).toUpperCase() + playerSelection.substr(1).toLowerCase();
 
+let computerScore = 0;
+let playerScore = 0;
+
 function playGame() {
     if (computerSelection === 'Rock' && playerSelection === 'Scissors' || computerSelection === 'Scissors' && playerSelection === 'Paper' || computerSelection === 'Paper' && playerSelection === 'Rock') {
+        computerScore++;
         return `Computer wins! ${computerSelection} beats ${playerSelection}.`;
     }
     else if (playerSelection === 'Rock' && computerSelection === 'Scissors' || playerSelection === 'Scissors' && computerSelection === 'Paper' || playerSelection === 'Paper' && computerSelection === 'Rock') {
+        playerScore++;
         return `Player wins! ${playerSelection} beats ${computerSelection}.`;
     }
     else if (playerSelection === 'Rock' && computerSelection === 'Rock' || playerSelection === 'Rock' && computerSelection === 'Rock' || playerSelection === 'Scissors' && computerSelection === 'Scissors') {
@@ -30,5 +35,15 @@ function playGame() {
     }
 }
 
-    
-</style>
+const result = playGame();
+console.log(result);
+console.log(`player score: ${playerScore}`);
+console.log(`computer score: ${computerScore}`);
+
+
+ 
+ 
+
+
+
+</script>
