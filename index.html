@@ -12,7 +12,7 @@
 </html>
 
 <script>
-
+// --start-- build the DOM first
 const body = document.querySelector('body');
 body.style.backgroundColor = 'yellow';
 const maindiv = document.createElement('div');
@@ -24,51 +24,43 @@ const rockBtn = document.createElement('button');
 maindiv.appendChild(rockBtn);
 rockBtn.setAttribute('id', 'rock');
 rockBtn.textContent = 'Rock';
-rockBtn.style.cssText = 'margin: 50px 30px 30px 75px';
+rockBtn.style.cssText = 'margin: 50px 30px 30px 75px; padding: 5px 5px;';
 const paperBtn = document.createElement('button');
 maindiv.appendChild(paperBtn);
 paperBtn.setAttribute('id', 'paper');
 paperBtn.textContent = 'Paper';
-paperBtn.style.cssText = 'margin: 50px 30px 30px 75px';
+paperBtn.style.cssText = 'margin: 50px 30px 30px 75px; padding: 5px 5px;';
 const scissorsBtn = document.createElement('button');
 maindiv.appendChild(scissorsBtn);
 scissorsBtn.setAttribute('id', 'scissors');
 scissorsBtn.textContent = 'Scissors';
-scissorsBtn.style.cssText = 'margin: 50px 30px 30px 75px';
+scissorsBtn.style.cssText = 'margin: 50px 30px 30px 75px; padding: 5px 5px;';
 const result = document.createElement('p');
 maindiv.appendChild(result);
-result.textContent = '';
-result.style.cssText = 'width: 50%; margin: 40px auto; text-align: center;'
-
+result.textContent = 'Let\'s play game!';
+result.style.cssText = ' font-size: 18px; font-weight: bold; width: 80%; margin: 40px auto; text-align: center;';
 const scores = document.createElement('p');
 maindiv.appendChild(scores);
 scores.textContent = '';
 scores.style.cssText = 'width: 40%; margin: 40px; text-align: center;';
-
-
 const pscore = document.createElement('span');
 maindiv.appendChild(pscore);
 pscore.textContent = 'Player Score:';
-pscore.style.cssText = 'width: 20%; display: inline; margin: 40px 40px 40px 100px; text-align: center;';
-
+pscore.style.cssText = 'width: 20%; display: inline; margin: 40px 40px 40px 110px; text-align: center;';
 const compscore = document.createElement('span');
 maindiv.appendChild(compscore);
 compscore.textContent = 'Computer Score:';
-compscore.style.cssText = 'width: 20%; display: inline; margin: 40px 40px 40px 80px; text-align: center;';
-
+compscore.style.cssText = 'width: 20%; display: inline; margin: 40px 40px 40px 100px; text-align: center;';
 const pvalue = document.createElement('p');
 maindiv.appendChild(pvalue);
-pvalue.textContent = '';
+pvalue.textContent = 0;
 pvalue.style.cssText = 'width: 20%; display: inline-block; margin: 5px 90px; text-align: center;';
-
 const compvalue = document.createElement('p');
 maindiv.appendChild(compvalue);
-compvalue.textContent = '';
-compvalue.style.cssText = 'width: 20%; display: inline; margin: 5px 70px; text-align: center;';
+compvalue.textContent = 0;
+compvalue.style.cssText = 'width: 20%; display: inline; margin: 5px 90px; text-align: center;';
 
-
-
-
+// function for getting the computer random choice
 function getComputerChoice() {
 const compSelect = ['Rock', 'Paper', 'Scissors'];
 const comp = Math.floor(Math.random() * compSelect.length);
@@ -78,55 +70,65 @@ return compSelect[comp];
 let computerSelection = getComputerChoice();
 
 
+// function for getting the player choice
 let playerSelection;
-
-rockBtn.addEventListener('click', select = () => {
-    playerSelection = rockBtn.textContent;  
-});  
-
-paperBtn.addEventListener('click', select = () => {
-    playerSelection = paperBtn.textContent; 
-}); 
-
-scissorsBtn.addEventListener('click', select = () => {
-    playerSelection = scissorsBtn.textContent; 
-} 
-);  
-
+rockBtn.addEventListener('click', eve = () => {
+    playerSelection = rockBtn.textContent;
+    playRound();
+});
+paperBtn.addEventListener('click', eve = () => {
+    playerSelection = paperBtn.textContent;
+    playRound(); 
+});
+scissorsBtn.addEventListener('click', eve = () => {
+    playerSelection = scissorsBtn.textContent;
+    playRound();
+});
 
 
+// function for playing a round of game
 let playerScore = 0;
 let computerScore = 0;
 
-result.textContent = 'Let\'s play game!';
-pvalue.textContent = 0;
-compvalue.textContent = 0;
-
-
-rockBtn.addEventListener('click', playRound = () => {
-if (computerSelection === 'Scissors') {pvalue.textContent = ++playerScore; compvalue.textContent = computerScore; result.textContent = `You win! ${playerSelection} beats ${computerSelection}`}
-    else if (computerSelection === 'Paper') {pvalue.textContent = playerScore; compvalue.textContent = ++computerScore; result.textContent = `computer wins! ${computerSelection} beats ${playerSelection}`}
-    else if (computerSelection === 'Rock') {pvalue.textContent = playerScore; compvalue.textContent = computerScore; result.textContent = 'Tie game, play again!'}
+function playRound() {
+if (computerSelection === 'Scissors' && playerSelection === 'Rock' || computerSelection === 'Paper' && playerSelection === 'Scissors' || computerSelection === 'Rock' && playerSelection === 'Paper') {pvalue.textContent = ++playerScore; compvalue.textContent = computerScore; result.textContent = `You win! ${playerSelection} beats ${computerSelection}`}
+    else if (computerSelection === 'Paper' && playerSelection === 'Rock' || computerSelection === 'Rock' && playerSelection === 'Scissors' || computerSelection === 'Scissors' && playerSelection === 'Paper') {pvalue.textContent = playerScore; compvalue.textContent = ++computerScore; result.textContent = `Computer wins! ${computerSelection} beats ${playerSelection}`}
+    else if (computerSelection === 'Rock' && playerSelection === 'Rock' || computerSelection === 'Paper' && playerSelection === 'Paper' || computerSelection === 'Scissors' && playerSelection === 'Scissors') {pvalue.textContent = playerScore; compvalue.textContent = computerScore; result.textContent = 'Tie game, play again!'}
     else result.textContent = 'invalid selection';
     computerSelection = getComputerChoice();
+
+    let pnut = Number(pvalue.textContent);
+    let conut = Number(compvalue.textContent);
+if (pnut === 5) {
+    rockBtn.style.cssText = 'display: none';
+    paperBtn.style.cssText = 'display: none';
+    scissorsBtn.style.cssText = 'display: none';
+    result.textContent = 'YOU WON! WHAT A GENIUS MOVE!';
+    result.style.cssText = 'padding-top: 70px; padding-bottom: 30px; text-align: center; font-size: 20px; font-weight: bold';
+    const restartBtn = document.createElement('button');
+maindiv.appendChild(restartBtn);
+restartBtn.textContent = 'Play Again';
+restartBtn.style.cssText = 'margin: 20px 220px; padding: 8px; background-color: yellow;';
+restartBtn.addEventListener('click', function restart() {
+    window.location.reload();
 });
-
-paperBtn.addEventListener('click', playRound = () => {
-if (computerSelection === 'Scissors') {pvalue.textContent = playerScore; compvalue.textContent = ++computerScore; result.textContent = `computer wins! ${computerSelection} beats ${playerSelection}`}
-    else if (computerSelection === 'Rock') {pvalue.textContent = ++playerScore; compvalue.textContent = computerScore; result.textContent = `You win! ${playerSelection} beats ${computerSelection}`}
-    else if (computerSelection === 'Paper') {pvalue.textContent = playerScore; compvalue.textContent = computerScore; result.textContent = 'Tie game, play again!'}
-    else result.textContent = 'invalid selection';
-    computerSelection = getComputerChoice();
-});
-
-scissorsBtn.addEventListener('click', playRound = () => {
-if (computerSelection === 'Rock') {pvalue.textContent = playerScore; compvalue.textContent = ++computerScore; result.textContent = `computer wins! ${computerSelection} beats ${playerSelection}`}
-    else if (computerSelection === 'Paper') {pvalue.textContent = ++playerScore; compvalue.textContent = computerScore; result.textContent = `You win! ${playerSelection} beats ${computerSelection}`}
-    else if (computerSelection === 'Scissors') {pvalue.textContent = playerScore; compvalue.textContent = computerScore; result.textContent = 'Tie game, play again!'}
-    else result.textContent = 'invalid selection';
-    computerSelection = getComputerChoice();
-})
-
+}
+else if (conut === 5) {
+    playBtns.forEach((Btn) => Btn.style.display = 'none');
+    rockBtn.style.cssText = 'display: none';
+    paperBtn.style.cssText = 'display: none';
+    scissorsBtn.style.cssText = 'display: none';
+    result.textContent = 'OOPS! COMPUTER WINS.';
+    result.style.cssText = 'padding-top: 70px; padding-bottom: 30px; text-align: center; font-size: 20px; font-weight: bold';
+    const restartBtn = document.createElement('button');
+maindiv.appendChild(restartBtn);
+restartBtn.textContent = 'Play Again';
+restartBtn.style.cssText = 'margin: 20px 220px; padding: 8px; background-color: yellow;';
+restartBtn.addEventListener('click', () => {
+    window.location.reload();
+});     
+};
+}
 
 
 
